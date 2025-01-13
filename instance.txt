@@ -1,0 +1,6 @@
+markdown pembuatan aplikasi LPSI :
+- halaman indeks(halaman)
+- halaman peserta
+- halaman informasi
+- halaman pengaturan
+- halaman tentang
