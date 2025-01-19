@@ -20,6 +20,9 @@ $nama_peserta = $peserta['Nama'];
 $id_peserta = $peserta['ID'];
 $alamat_peserta = $peserta['alamat'];
 
+$stmt = $pdo->query("SELECT * FROM informasi LIMIT 1");
+$data = $stmt->fetch();
+
 ?>
 
 <html lang="en">
@@ -58,7 +61,7 @@ $alamat_peserta = $peserta['alamat'];
  <body class="bg-gray-100">
   <!-- Splash Screen -->
   <div id="splash-screen" class="fixed inset-0 bg-white flex items-center justify-center z-50">
-   <img alt="Company logo with a 16:9 aspect ratio" class="h-12 w-auto" height="50" src="https://storage.googleapis.com/a1aa/image/teWVpuWI9kVTW6dOzHie2QXZYrOze7lz9pSukGFAlfM9E4DQB.jpg" width="100"/>
+   <img alt="Company logo with a 16:9 aspect ratio" class="h-26 w-auto" height="50" src="logolpsi_2.png" width="50"/>
   </div>
   <header class="bg-white shadow-md w-full z-50 fixed top-0 hidden" id="main-header">
    <div class="container mx-auto px-4 py-2 flex justify-between items-center">
@@ -70,7 +73,7 @@ $alamat_peserta = $peserta['alamat'];
     </div>
     <!-- Logo -->
     <div class="flex items-center">
-     <img alt="Company logo with a 16:9 aspect ratio" class="h-12 w-auto" height="50" src="https://storage.googleapis.com/a1aa/image/teWVpuWI9kVTW6dOzHie2QXZYrOze7lz9pSukGFAlfM9E4DQB.jpg" width="100"/>
+     <img alt="Company logo with a 16:9 aspect ratio" class="h-16 w-auto" height="50" src="Logolpsi_2.png" width="50"/>
     </div>
    </div>
   </header>
@@ -86,17 +89,14 @@ $alamat_peserta = $peserta['alamat'];
       <a class="text-gray-700 hover:text-gray-900" href="#" onclick="navigateTo('index')">Beranda</a>
      </li>
      <li class="mb-4">
-      <a class="text-gray-700 hover:text-gray-900" href="#" onclick="navigateTo('informasi-pelatihan')">Informasi Pelatihan</a>
-     </li>
-     <li class="mb-4">
-      <a class="text-gray-700 hover:text-gray-900" href="#" onclick="navigateTo('edukasi-terbaru')"> Edukasi Terbaru</a>
+      <a class="text-gray-700 hover:text-gray-900" href="#" onclick="navigateTo('informasi-pelatihan')">Informasi</a>
      </li>
      <li class="mb-4">
       <a class="text-gray-700 hover:text-gray-900" href="#" onclick="navigateTo('tentang-lpsi')">Tentang LPSI</a>
      </li>
     </ul>
     <div class="flex items-center justify-between mt-4">
-     <span class="text-gray-700">Nama User</span>
+     <span class="text-gray-700"><?php echo $nama_peserta; ?></span>
      <button class="text-gray-600 focus:outline-none focus:text-gray-900">
       <i class="fas fa-sign-out-alt fa-2x"></i>
      </button>
@@ -110,14 +110,31 @@ $alamat_peserta = $peserta['alamat'];
     <div class="bg-white shadow-md rounded-lg mx-auto p-4 flex items-center" style="max-width: 600px;">
      <!-- Image Box -->
      <div class="flex-shrink-0">
-      <img alt="Participant's profile picture with a 1:1 aspect ratio" class="h-36 w-36 rounded" height="150" src="https://storage.googleapis.com/a1aa/image/wJLjkZxQ5e0rbSMNOkFoCyyGnTuTycdV5Nd7dYTXtP6lAfAUA.jpg" width="150"/>
+      <img alt="Participant's profile picture with a 1:1 aspect ratio" class="h-36 w-36 rounded" height="150" src="logoLPSI.png" width="150"/>
      </div>
      <!-- informasi peserta -->
-     <div class="ml-2">
-      <h2 class="text-xl font-semibold text-gray-800" id="nama-peserta"><?php echo $nama_peserta; ?></h2>
-      <p class="text-gray-600" id="id-peserta">ID Peserta: <?php echo $id_peserta; ?></p>
-      <p class="text-gray-600" id="alamat-peserta">Alamat Peserta: <?php echo $alamat_peserta; ?></p>
-     </div>
+     <div class="ml-2 overflow-x-auto">
+  <table class="min-w-full divide-y divide-gray-200 text-sm">
+    <tbody class="bg-white divide-y divide-gray-200">
+      <tr>
+        <td class="px-1 py-2 whitespace-nowrap">ID</td>
+        <td class="px-1 py-2 whitespace-nowrap">:</td>
+        <td class="px-2 py-2 whitespace-nowrap" id="id-peserta">lpsi_<?php echo $id_peserta; ?></td>
+      </tr>
+      <tr>
+        <td class="px-1 py-2 whitespace-nowrap">Nama</td>
+        <td class="px-1 py-2 whitespace-nowrap">:</td>
+        <td class="px-2 py-2 whitespace-nowrap" id="nama-peserta"><?php echo $nama_peserta; ?></td>
+      </tr>
+      <tr>
+        <td class="px-1 py-2 whitespace-nowrap">Alamat</td>
+        <td class="px-1 py-2 whitespace-nowrap">:</td>
+        <td class="px-2 py-2 whitespace-nowrap" id="alamat-peserta"><?php echo $alamat_peserta; ?></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+     
     </div>
     <!-- Recommendations Section -->
     <div class="mt-4">
@@ -125,33 +142,33 @@ $alamat_peserta = $peserta['alamat'];
      <div class="flex overflow-x-scroll space-x-4 mt-2">
       <!-- Recommendation Item 1 -->
       <a class="flex-shrink-0 w-40 bg-white shadow-md rounded-lg p-2 relative" href="#">
-       <img alt="Recommendation image 1" class="h-24 w-full rounded" height="150" src="https://storage.googleapis.com/a1aa/image/76FKIOfazt07OqolBfv60ocps3yjplrr0Hr1SUPguS9UBeBoA.jpg" width="150"/>
-       <p class="text-gray-700 mt-2">Informasi 1</p>
+       <img alt="Recommendation image 1" class="h-24 w-full rounded" height="150" src="uploads/<?php echo $data['gambar_informasi1']; ?>" width="150"/>
+       <p class="text-gray-700 mt-2">#informasi1</p>
       </a>
       <!-- Recommendation Item 2 -->
       <a class="flex-shrink-0 w-40 bg-white shadow-md rounded-lg p-2 relative" href="#">
-       <img alt="Recommendation image 2" class="h-24 w-full rounded" height="150" src="https://storage.googleapis.com/a1aa/image/NXj2zfeFqRhiEUfLlKVxVyEzOO0RycAg2Nr4anCZPX2OC8BoA.jpg" width="150"/>
-       <p class="text-gray-700 mt-2">Informasi 2</p>
+       <img alt="Recommendation image 2" class="h-24 w-full rounded" height="150" src="<?php echo $data['gambar_informasi2']; ?>" width="150"/>
+       <p class="text-gray-700 mt-2">#informasi2</p>
       </a>
       <!-- Recommendation Item 3 -->
       <a class="flex-shrink-0 w-40 bg-white shadow-md rounded-lg p-2 relative" href="#">
-       <img alt="Recommendation image 3" class="h-24 w-full rounded" height="150" src="https://storage.googleapis.com/a1aa/image/EwVsmpcT8mbmFxMc2nEC5Gx7ZzvfOu0Z5t4DZH0NVPlmAfAUA.jpg" width="150"/>
-       <p class="text-gray-700 mt-2">Informasi 3</p>
+       <img alt="Recommendation image 3" class="h-24 w-full rounded" height="150" src="<?php echo $data['gambar_informasi3']; ?>" width="150"/>
+       <p class="text-gray-700 mt-2">#informasi3</p>
       </a>
       <!-- Recommendation Item 4 -->
       <a class="flex-shrink-0 w-40 bg-white shadow-md rounded-lg p-2 relative" href="#">
-       <img alt="Recommendation image 4" class="h-24 w-full rounded" height="150" src="https://storage.googleapis.com/a1aa/image/xeR2qMF6Aej0W0M0yPIo7UzligqiaUF8TWm1UXfTfL0AF4DQB.jpg" width="150
-       <p class="text-gray-700 mt-2">Informasi 4</p>
+       <img alt="Recommendation image 4" class="h-24 w-full rounded" height="150" src="<?php echo $data['gambar_informasi4']; ?>" width="150"/>
+       <p class="text-gray-700 mt-2">#informasi4</p>
       </a>
       <!-- Recommendation Item 5 -->
       <a class="flex-shrink-0 w-40 bg-white shadow-md rounded-lg p-2 relative" href="#">
-       <img alt="Recommendation image 5" class="h-24 w-full rounded" height="150" src="https://storage.googleapis.com/a1aa/image/dL1hhY7OOi7mH5kh79OaUD40qG1GVmkkRBB1FWlRfATpAfAUA.jpg" width="150"/>
-       <p class="text-gray-700 mt-2">Informasi 5</p>
+       <img alt="Recommendation image 5" class="h-24 w-full rounded" height="150" src="<?php echo $data['gambar_informasi5']; ?>" width="150"/>
+       <p class="text-gray-700 mt-2">#informasi5</p>
       </a>
       <!-- Recommendation Item 6 -->
       <a class="flex-shrink-0 w-40 bg-white shadow-md rounded-lg p-2 relative" href="#">
-       <img alt="Recommendation image 6" class="h-24 w-full rounded" height="150" src="https://storage.googleapis.com/a1aa/image/0iwhqvfUbfvLIkuCh8E3KL4g0geUJqg9gBekuntwYQzlE4DQB.jpg" width="150"/>
-       <p class="text-gray-700 mt-2">Informasi 6</p>
+       <img alt="Recommendation image 6" class="h-24 w-full rounded" height="150" src="<?php echo $data['gambar_informasi6']; ?>" width="150"/>
+       <p class="text-gray-700 mt-2">#informasi6</p>
       </a>
      </div>
     </div>
@@ -194,20 +211,119 @@ $alamat_peserta = $peserta['alamat'];
    </div>
    <!-- Informasi Pelatihan Page -->
    <div id="informasi-pelatihan" class="content-page hidden">
-    <h2 class="text-2xl font-semibold text-gray-800">Informasi Pelatihan</h2>
-    <p class="text-gray-600 mt-4">Ini adalah halaman Informasi Pelatihan.</p>
-   </div>
-   <!-- Edukasi Terbaru Page -->
-   <div id="edukasi-terbaru" class
-   class="content-page hidden">
-    <h2 class="text-2xl font-semibold text-gray-800">Edukasi Terbaru</h2>
-    <p class="text-gray-600 mt-4">Ini adalah halaman Edukasi Terbaru.</p>
+   <div class="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="bg-white p-4 rounded-lg shadow-md">
+       <img alt="Gambar pelatihan tentang pengembangan web" class="w-full h-40 object-cover rounded-t-lg" height="200" src="#gambarflayer1" width="300"/>
+       <h4 class="text-lg font-semibold text-gray-800 mt-2">
+       <?php echo $data['judul_info1']; ?>
+       </h4>
+       <p class="text-gray-600 mt-1">
+        #isiinfo1
+       </p>
+      </div>
+      <div class="bg-white p-4 rounded-lg shadow-md">
+       <img alt="Gambar pelatihan tentang desain grafis" class="w-full h-40 object-cover rounded-t-lg" height="200" src="#gambarflayer2" width="300"/>
+       <h4 class="text-lg font-semibold text-gray-800 mt-2">
+       <?php echo $data['judul_info2']; ?>
+       </h4>
+       <p class="text-gray-600 mt-1">
+        #isiinfo2
+       </p>
+      </div>
+      <div class="bg-white p-4 rounded-lg shadow-md">
+       <img alt="Gambar pelatihan tentang analisis data" class="w-full h-40 object-cover rounded-t-lg" height="200" src="#gambarflayer3" width="300"/>
+       <h4 class="text-lg font-semibold text-gray-800 mt-2">
+       <?php echo $data['judul_info3']; ?>
+       </h4>
+       <p class="text-gray-600 mt-1">
+        #isiinfo3
+       </p>
+      </div>
+      <div class="bg-white p-4 rounded-lg shadow-md">
+       <img alt="Gambar pelatihan tentang pemasaran digital" class="w-full h-40 object-cover rounded-t-lg" height="200" src="#gambarflayer4" width="300"/>
+       <h4 class="text-lg font-semibold text-gray-800 mt-2">
+       <?php echo $data['judul_info4']; ?>
+       </h4>
+       <p class="text-gray-600 mt-1">
+        #isiinfo4
+       </p>
+      </div>
+      <div class="bg-white p-4 rounded-lg shadow-md">
+       <img alt="Gambar pelatihan tentang manajemen proyek" class="w-full h-40 object-cover rounded-t-lg" height="200" src="#gambarflayer5" width="300"/>
+       <h4 class="text-lg font-semibold text-gray-800 mt-2">
+       <?php echo $data['judul_info6']; ?>
+       </h4>
+       <p class="text-gray-600 mt-1">
+        #isiinfo5
+       </p>
+      </div>
+      <div class="bg-white p-4 rounded-lg shadow-md">
+       <img alt="Gambar pelatihan tentang keamanan siber" class="w-full h-40 object-cover rounded-t-lg" height="200" src="#gambarflayer6" width="300"/>
+       <h4 class="text-lg font-semibold text-gray-800 mt-2">
+       <?php echo $data['judul_info6']; ?>
+       </h4>
+       <p class="text-gray-600 mt-1">
+        #isiinfo6
+       </p>
+      </div>
+     </div>
    </div>
    <!-- Tentang LPSI Page -->
    <div id="tentang-lpsi" class="content-page hidden">
-    <h2 class="text-2xl font-semibold text-gray-800">Tentang LPSI</h2>
-    <p class="text-gray-600 mt-4">Ini adalah halaman Tentang LPSI.</p>
+   <div class="container mx-auto p-4">
+   <div class="text-center">
+    <img alt="Logo perusahaan dengan desain modern dan elegan" class="h-48 w-auto mx-auto" height="80" src="Logolpsi_1.png"/>
    </div>
+   <div class="mt-8">
+    <h2 class="text-2xl font-semibold text-gray-800">
+     Tentang Kami
+    </h2>
+    <p class="text-gray-600 mt-4">
+     Kami adalah perusahaan yang didirikan oleh tiga pendiri yang berdedikasi untuk memberikan solusi terbaik bagi pelanggan kami.
+    </p>
+    <div class="mt-6">
+     <h3 class="text-xl font-semibold text-gray-800">
+      Bio Founder 1
+     </h3>
+     <div class="flex items-center mt-4">
+      <img alt="Foto Founder 1 dengan latar belakang profesional" class="w-24 h-24 object-cover rounded-full" height="96" src="https://storage.googleapis.com/a1aa/image/31T99iUBvi6gGZlDeAX5uPfLYzgwHQPGtIjWSBygPzIfZLNoA.jpg" width="96"/>
+      <p class="text-gray-600 ml-4">
+       Founder 1 adalah seorang ahli dalam bidang teknologi dengan pengalaman lebih dari 10 tahun. Beliau memiliki visi untuk membawa inovasi ke dalam industri.
+      </p>
+     </div>
+    </div>
+    <div class="mt-6">
+     <h3 class="text-xl font-semibold text-gray-800">
+      Bio Founder 2
+     </h3>
+     <div class="flex items-center mt-4">
+      <img alt="Foto Founder 2 dengan latar belakang profesional" class="w-24 h-24 object-cover rounded-full" height="96" src="https://storage.googleapis.com/a1aa/image/ffIJNvXdoWudq0uRfcniKpJeLqxDvYxYtFAIOmKbex5Dot0gC.jpg" width="96"/>
+      <p class="text-gray-600 ml-4">
+       Founder 2 adalah seorang ahli dalam bidang pemasaran dengan pengalaman lebih dari 8 tahun. Beliau memiliki kemampuan untuk mengembangkan strategi pemasaran yang efektif.
+      </p>
+     </div>
+    </div>
+    <div class="mt-6">
+     <h3 class="text-xl font-semibold text-gray-800">
+      Bio Founder 3
+     </h3>
+     <div class="flex items-center mt-4">
+      <img alt="Foto Founder 3 dengan latar belakang profesional" class="w-24 h-24 object-cover rounded-full" height="96" src="https://storage.googleapis.com/a1aa/image/sVD4ADCMzgagFxG6QKXfFmNkDGpKsBXet6jBRFYu1fBDaLNoA.jpg" width="96"/>
+      <p class="text-gray-600 ml-4">
+       Founder 3 adalah seorang ahli dalam bidang manajemen dengan pengalaman lebih dari 12 tahun. Beliau memiliki kemampuan untuk memimpin tim dan mengelola proyek dengan efisien.
+      </p>
+     </div>
+    </div>
+    <div class="mt-6">
+     <h3 class="text-xl font-semibold text-gray-800">
+      Dibangunnya Sebuah Perusahaan
+     </h3>
+     <p class="text-gray-600 mt-4">
+      Perusahaan ini didirikan pada tahun 2020 dengan tujuan untuk memberikan solusi inovatif dan berkualitas tinggi kepada pelanggan kami. Kami percaya bahwa dengan kerja keras dan dedikasi, kami dapat mencapai visi kami untuk menjadi pemimpin di industri ini.
+     </p>
+    </div>
+   </div>
+  </div>
   </div>
   <!-- Footer -->
   <footer class="bg-white shadow-md mt-4 py-4 hidden" id="main-footer">
