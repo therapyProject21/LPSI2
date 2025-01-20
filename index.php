@@ -7,22 +7,29 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-require 'transfer.php'; // Pastikan file koneksi.php sudah ada
+include 'admin/config.php'; // Koneksi ke database
+require 'transfer.php'; // Pastikan file koneksi.php sudah ada dan menginisialisasi objek $pdo
 
 // Ambil data peserta dari database
 $user_id = $_SESSION['user_id'];
 $stmt = $pdo->prepare("SELECT Nama, ID, alamat FROM pengguna WHERE ID = ?");
 $stmt->execute([$user_id]);
-$peserta = $stmt->fetch();
+$peserta = $stmt->fetch(PDO::FETCH_ASSOC);
 
-// Tampilkan informasi peserta
-$nama_peserta = $peserta['Nama'];
-$id_peserta = $peserta['ID'];
-$alamat_peserta = $peserta['alamat'];
+// Pastikan data ditemukan
+if ($peserta) {
+    $nama_peserta = $peserta['Nama'];
+    $id_peserta = $peserta['ID'];
+    $alamat_peserta = $peserta['alamat'];
+} else {
+    // Jika data tidak ditemukan
+    echo "Data peserta tidak ditemukan.";
+    exit;
+}
 
+// Ambil informasi tambahan dari tabel informasi
 $stmt = $pdo->query("SELECT * FROM informasi LIMIT 1");
-$data = $stmt->fetch();
-
+$data = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
 
 <html lang="en">
@@ -119,17 +126,17 @@ $data = $stmt->fetch();
       <tr>
         <td class="px-1 py-2 whitespace-nowrap">ID</td>
         <td class="px-1 py-2 whitespace-nowrap">:</td>
-        <td class="px-2 py-2 whitespace-nowrap" id="id-peserta">lpsi_<?php echo $id_peserta; ?></td>
-      </tr>
+        <td class="px-2 py-2 whitespace-nowrap" id="id-peserta">lpsi_<?php echo htmlspecialchars($id_peserta); ?></td>
+      </tr> 
       <tr>
         <td class="px-1 py-2 whitespace-nowrap">Nama</td>
         <td class="px-1 py-2 whitespace-nowrap">:</td>
-        <td class="px-2 py-2 whitespace-nowrap" id="nama-peserta"><?php echo $nama_peserta; ?></td>
+        <td class="px-2 py-2 whitespace-nowrap" id="nama-peserta"><?php echo htmlspecialchars($nama_peserta); ?></td>
       </tr>
       <tr>
         <td class="px-1 py-2 whitespace-nowrap">Alamat</td>
         <td class="px-1 py-2 whitespace-nowrap">:</td>
-        <td class="px-2 py-2 whitespace-nowrap" id="alamat-peserta"><?php echo $alamat_peserta; ?></td>
+        <td class="px-2 py-2 whitespace-nowrap" id="alamat-peserta"><?php echo htmlspecialchars($alamat_peserta); ?></td>
       </tr>
     </tbody>
   </table>
